@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/clMainWeather"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_bg_rain_app">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/avLoading"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:lottie_fileName="sun_loading.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+            android:id="@+id/clMainWeatherCoordinator"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+
+            >
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/appBarCollapsing"
+                android:fitsSystemWindows="true"
+
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="80dp">
+
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/clToolbarLayout"
+                    app:collapsedTitleGravity="center"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/clMainForecastDays"
+                    android:fitsSystemWindows="true"
+                    app:contentScrim="?attr/colorPrimary"
+                    android:background="@android:color/transparent"
+                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/clWeatherDescription"
+                        android:background="@drawable/shape_bg_rain_app"
+                        android:visibility="gone"
+                        android:layout_margin="4dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/clMainForecastDays"
+                        android:orientation="vertical"
+                        app:layout_collapseMode="parallax"
+
+
+                        >
+
+                        <com.nambimobile.widgets.efab.ExpandableFabLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <com.nambimobile.widgets.efab.ExpandableFab
+                                android:id="@+id/expandable_fab"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="40dp"
+                                app:efab_orientation="portrait"
+                                app:elevation="0.3dp"
+                                app:borderWidth="0dp"
+                                app:efab_color="@color/black_transparent"
+                                app:efab_icon="@drawable/ic_settings"
+                                app:tint="@color/white"
+                                app:efab_size="mini"
+                                app:efab_enabled="true"
+                                app:efab_iconAnimationRotationDeg="-135"
+                                app:efab_fabOptionSize="mini"
+                                app:efab_fabOptionPosition="below"
+                                app:efab_firstFabOptionMarginPx="70"
+
+                                app:efab_successiveFabOptionMarginPx="70"
+                                app:efab_openingAnimationDurationMs="250"
+                                app:efab_closingAnimationDurationMs="500"
+                                app:efab_closingAnticipateTension="2" />
+
+                            <com.nambimobile.widgets.efab.FabOption
+                                android:id="@+id/fabSettingsWeather"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:fab_color="#FF8800"
+                                app:fab_icon="@drawable/ic_wrench"
+
+                                app:label_backgroundColor="#808080"
+                                app:tint="@color/white"
+
+                                app:label_position="right"
+                                app:fab_orientation="portrait" />
+
+                            <com.nambimobile.widgets.efab.FabOption
+                                android:id="@+id/fabUpdateWeather"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:fab_color="#5283F5"
+                                app:fab_icon="@drawable/ic_update"
+
+                                app:label_position="right"
+                                app:fab_orientation="portrait"
+                                app:label_backgroundColor="#808080"
+                                app:tint="@color/white" />
+                        </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imgPin"
+                            android:src="@drawable/ic_pin"
+                            app:tint="@android:color/white"
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:fabSize="mini"
+                            app:backgroundTint="@color/black_transparent"
+                            app:elevation="0.3dp"
+                            android:layout_marginEnd="10dp"
+                            app:borderWidth="0dp"
+                            android:layout_marginTop="40dp" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imgSettings"
+                            android:src="@drawable/ic_settings"
+                            app:tint="@color/white"
+                            app:fabSize="mini"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="40dp"
+                            android:id="@+id/ivRainProbabilityMain"
+                            app:layout_constraintEnd_toStartOf="@id/imageViewMain"
+                            app:layout_constraintBottom_toBottomOf="@id/imageViewMain"
+                            app:srcCompat="@drawable/ic_rain_umbrella"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvRainProbability"
+                            style="@style/tvWeatherTheme"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toStartOf="@id/ivRainProbabilityMain"
+                            app:layout_constraintTop_toBottomOf="@id/ivRainProbabilityMain"
+                            app:layout_constraintEnd_toEndOf="@id/ivRainProbabilityMain"
+                            tools:text="50%" />
+
+                        <ImageView
+                            android:id="@+id/imageViewMain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/cloudy_night" />
+
+                        <ImageView
+                            android:id="@+id/ivUveProtected"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="40dp"
+                            app:layout_constraintStart_toEndOf="@id/imageViewMain"
+                            app:layout_constraintBottom_toBottomOf="@id/imageViewMain"
+                            app:srcCompat="@drawable/uv_protection" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvUvi"
+                            style="@style/tvWeatherTheme"
+                            android:textStyle="bold"
+                            android:textSize="11sp"
+                            app:layout_constraintEnd_toEndOf="@id/ivUveProtected"
+                            app:layout_constraintTop_toBottomOf="@id/ivUveProtected"
+
+                            tools:text="Muy alta" />
+
+                        <TextView
+                            android:id="@+id/tvTimeZone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Arequipa miraflores Miraflores Arequipa miralfoes miraflores miraflores"
+                            style="@style/tvWeatherTheme"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="10dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:layout_marginTop="35dp"
+                            app:layout_constraintStart_toStartOf="@id/imageViewMain"
+                            app:layout_constraintEnd_toEndOf="@id/imageViewMain"
+                            app:layout_constraintTop_toBottomOf="@id/imageViewMain" />
+
+                        <TextView
+                            android:id="@+id/tvNameWeatherMain"
+                            style="@style/tvWeatherTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Parcialmente nublado, tornado, parcialmente nublado con viento y nevando"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@id/tvTimeZone"
+                            app:layout_constraintStart_toStartOf="@id/tvTimeZone"
+                            app:layout_constraintTop_toBottomOf="@id/tvTimeZone" />
+
+                        <TextView
+                            android:id="@+id/tvWeatherDegrees"
+                            style="@style/tvWeatherTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="20"
+                            android:textSize="50sp"
+                            app:layout_constraintEnd_toEndOf="@id/tvNameWeatherMain"
+                            app:layout_constraintStart_toStartOf="@id/tvNameWeatherMain"
+                            app:layout_constraintTop_toBottomOf="@id/tvNameWeatherMain" />
+
+                        <ImageView
+                            android:id="@+id/imgDegrees"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:src="@drawable/degree"
+                            app:layout_constraintStart_toEndOf="@id/tvWeatherDegrees"
+                            app:layout_constraintTop_toTopOf="@id/tvWeatherDegrees"
+                            app:tint="@color/white" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:id="@+id/ivHighTemp"
+                            android:src="@drawable/ic_high_temperatures"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvWeatherDegrees"
+                            app:layout_constraintBottom_toTopOf="@id/btnWeatherDaily"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginTop="-6dp" />
+
+                        <TextView
+                            android:id="@+id/tvHighestTemp"
+                            style="@style/tvWeatherTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+
+                            android:text="21"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toEndOf="@id/ivHighTemp"
+                            app:layout_constraintTop_toTopOf="@id/ivHighTemp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivHighTemp" />
+
+                        <ImageView
+                            android:id="@+id/ivLowTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="-6dp"
+                            android:layout_marginEnd="40dp"
+                            android:src="@drawable/ic_low_temperature"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvWeatherDegrees"
+                            app:layout_constraintBottom_toTopOf="@id/btnWeatherMinutes"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tvLowestTemp"
+                            style="@style/tvWeatherTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginEnd="4dp"
+                            android:text="12"
+                            android:textSize="24sp"
+                            app:layout_constraintEnd_toStartOf="@id/ivLowTemp"
+                            app:layout_constraintTop_toTopOf="@id/ivLowTemp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivLowTemp" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="136dp" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.66" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/btnWeatherDaily"
+                            android:text="@string/dailyTitleMain"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/btnWeatherHours"
+                            style="@style/buttonsMainStyle" />
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/btnWeatherHours"
+                            android:text="@string/hourlyTitleMain"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/btnWeatherDaily"
+                            app:layout_constraintEnd_toStartOf="@id/btnWeatherMinutes"
+                            style="@style/buttonsMainStyle"/>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/btnWeatherMinutes"
+                            android:text="@string/minutelyTitleMain"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/btnWeatherHours"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            style="@style/buttonsMainStyle"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ivScroll"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_horizontal_drag"
+                            app:tint="@color/white"
+
+                            android:layout_marginTop="-10dp"
+                            app:layout_constraintTop_toBottomOf="@id/btnWeatherHours"
+                            app:layout_constraintStart_toStartOf="@id/btnWeatherHours"
+                            app:layout_constraintEnd_toEndOf="@id/btnWeatherHours" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+
+                        android:id="@+id/toolbarCollapsing"
+
+                        android:background="@android:color/transparent"
+                        app:titleTextColor="@color/white"
+                        app:layout_collapseMode="pin"
+                        tools:ignore="MissingConstraints">
+
+                    </androidx.appcompat.widget.Toolbar>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/clMainForecastDays"
+                android:visibility="gone"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@id/clMainWeatherCoordinator"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/background_forecast_main_bottom">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:id="@+id/rvForecastDaysMain"
+                   style="@style/recyclerViewBottomStyle"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+
+                    />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/svDetailForecastBottom"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/rvForecastDaysMain"
+                    android:layout_marginTop="80dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/lnForecastCollapsing"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rvForecastDaysMain">
+
+                        <TextView
+                            android:id="@+id/tvDetailCollapsing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/bg_sun_dark"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="10dp"
+                            tools:text="poner lo que quieras" />
+
+                        <com.github.tianma8023.ssv.SunriseSunsetView
+                            android:id="@+id/ssView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvDetailCollapsing"
+                            app:ssv_label_horizontal_offset="12dp"
+                            app:ssv_label_text_color="@color/bg_sun_dark"
+                            app:ssv_label_text_size="16sp"
+                            app:ssv_label_vertical_offset="2dp"
+
+                            app:ssv_sun_color="@color/bg_sun_light"
+                            app:ssv_sun_radius="10dp"
+                            app:ssv_track_color="@color/bg_rain_dark"
+                            app:ssv_track_width="2.5dp" />
+
+                        <TextView
+                            android:id="@+id/tvSunrise"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toStartOf="@id/ssView"
+                            app:layout_constraintTop_toBottomOf="@id/ssView"
+                            tools:text="Amanecer" />
+
+                        <TextView
+                            android:id="@+id/tvSunset"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textSize="11sp"
+                            app:layout_constraintStart_toStartOf="@id/ssView"
+                            app:layout_constraintTop_toBottomOf="@id/tvSunrise"
+                            tools:text="Puesta de sol"
+
+                            />
+
+                        <include
+                            android:id="@+id/cvDetailMain"
+                            layout="@layout/forecast_detail_main"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toBottomOf="@id/tvSunset" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </ScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
