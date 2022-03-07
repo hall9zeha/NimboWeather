@@ -20,7 +20,7 @@ gratuita del clima de la API [OpenWeatherMap](https://openweathermap.org/api).
 ## Acerca de Nimbo weather
 
 Nimbo Weather hace uso de la API de pronóstico del tiempo de OpenWeatherMap, dando estadísticas e información confiable y actualizada, la ligereza de la aplicación
-hace que se amuy fluida en cualquier dispositivo moderno, siendo muy intuitiva en su manejo.  
+hace que sea muy fluida en cualquier dispositivo moderno, siendo muy intuitiva en su manejo.  
 
 ## Características
 
